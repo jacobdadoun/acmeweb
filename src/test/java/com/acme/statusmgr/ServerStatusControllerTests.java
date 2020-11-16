@@ -53,10 +53,13 @@ public class ServerStatusControllerTests {
 
     // curl http://localhost:8080/server/status/detailed
     //{"timestamp":"2019-11-06T07:20:47.663+0000","status":400,"error":"Bad Request","message":"Required List parameter 'details' is not present","path":"/server/status/detailed"}
-//    @Test
-//    public void paramDetailShouldReturnTailoredMessage() throws Exception {
-//
-//        this.mockMvc.perform(get("/server/status/detailed").param("details", "red,green,blue"))
-//                .andDo(print()).andExpect(status().i .andExpect(jsonPath("$.contentHeader").value("Server Status requested by RebYid"));
-//    }
+
+    @Test
+    public void withParamShouldReturnTailored_Name_Basic_Mem_Op() throws Exception {
+        this.mockMvc.perform(get("/server/status/detailed?details=memory&name=yaakov"))
+                .andDo(print()).andExpect(status().isOk())
+                .andExpect(jsonPath("$.contentHeader").value("Server Status requested by yaakov"))
+                .andExpect(jsonPath("$.statusDesc").value("Server is up, and its memory is running low"));
+
+    }
 }

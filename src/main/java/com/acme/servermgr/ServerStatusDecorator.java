@@ -22,12 +22,10 @@ import com.acme.statusmgr.beans.StatusInterface;
 
 public abstract class ServerStatusDecorator implements StatusInterface {
 
-    static protected StatusInterface tempStatusInterface;
-    static protected String statusMessage = "Unknown";
+    protected StatusInterface tempStatusInterface;
 
-    public ServerStatusDecorator(StatusInterface statusInterface){
-        tempStatusInterface = statusInterface;
-        statusMessage = tempStatusInterface.getStatusDesc();
+    public ServerStatusDecorator(StatusInterface tempStatusInterface){
+        this.tempStatusInterface = tempStatusInterface;
     }
 
     /**
@@ -39,14 +37,6 @@ public abstract class ServerStatusDecorator implements StatusInterface {
         return true;
     }
 
-    /**
-     * Set the status of this server
-     * @param statusDesc Status message for a request is passed here and assigned to the server object
-     */
-    @Override
-    public void setStatusDesc(String statusDesc) {
-        tempStatusInterface.setStatusDesc(statusDesc);
-    }
 
     /**
      * Get the status of this server
@@ -67,15 +57,4 @@ public abstract class ServerStatusDecorator implements StatusInterface {
         return tempStatusInterface.getStatusDesc();
     }
 
-
-    static public void setOperationStatusDesc() {
-        tempStatusInterface.setStatusDesc(tempStatusInterface.getStatusDesc() + ", and is operating normally");
-    }
-    static public void setExtensionsStatusDesc(){
-        tempStatusInterface.setStatusDesc(tempStatusInterface.getStatusDesc() + ", and is using these extensions - [Hypervisor, Kubernetes, RAID-6]");
-    }
-
-    static public void setMemoryStatusDesc(){
-        tempStatusInterface.setStatusDesc(tempStatusInterface.getStatusDesc() + ", and its memory is running low");
-    }
 }

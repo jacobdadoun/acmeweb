@@ -1,5 +1,7 @@
 package com.acme.statusmgr.beans;
 
+import com.acme.servermgr.ServerManager;
+
 import java.util.List;
 
 /**
@@ -27,12 +29,7 @@ public class ServerStatus implements StatusInterface{
         this.contentHeader = contentHeader;
 
         // Obtain current status of server
-        this.statusDesc = "Server is up";
-    }
-
-    @Override
-    public void setStatusDesc(String statusDesc) {
-        this.statusDesc = statusDesc;
+        this.statusDesc = "Server is" + ServerManager.getServerStatusDesc();
     }
 
     @Override

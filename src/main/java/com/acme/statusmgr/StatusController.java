@@ -63,21 +63,36 @@ public class StatusController {
     // Todo --> Parse through the list of desired details.
     //  Then have a switch statement which will create its decorator. When we call the constructor,
     @RequestMapping("status/detailed")
-    public StatusInterface getDetailedInfo(@RequestParam(value="name", defaultValue="Anonymous", required = false) String name, @RequestParam(value="details") List<String> details){
+    public StatusInterface getDetailedInfo(@RequestParam(value="name", defaultValue="Anonymous",
+            required = false) String name, @RequestParam(value="details") List<String> details){
 
         StatusInterface statusBuilder = new ServerStatus(counter.incrementAndGet(), String.format(template, name));
 
-        for (String str : details) {
-            if(str.toLowerCase().equals("operations")){
-                statusBuilder = new OperationStatus(statusBuilder);
+
+
+        if(details != null){
+
+            for (String str : details) {
+                System.out.println("***DEBUG INFO *** ::: " + str);
+
+                if(str.toLowerCase().equals("operations")){
+                    statusBuilder = new OperationStatus(statusBuilder);
+                }
+                if(str.toLowerCase().equals("extensions")){
+                    statusBuilder = new ExtensionStatus(statusBuilder);
+                }
+                if(str.toLowerCase().equals("memory")){
+                    statusBuilder = new MemoryStatus(statusBuilder);
+                }
             }
-            if(str.toLowerCase().equals("extensions")){
-                statusBuilder = new ExtensionStatus(statusBuilder);
-            }
-            if(str.toLowerCase().equals("memory")){
-                statusBuilder = new MemoryStatus(statusBuilder);
-            }
+
         }
+        else{
+            //TODO --> Define exceptionss. with or without HTTPStatus.Bad_Request?
+            Throw new DetailsException();
+        }
+
+
 
         return statusBuilder;
     }
