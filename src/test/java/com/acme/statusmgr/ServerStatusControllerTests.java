@@ -55,11 +55,29 @@ public class ServerStatusControllerTests {
     //{"timestamp":"2019-11-06T07:20:47.663+0000","status":400,"error":"Bad Request","message":"Required List parameter 'details' is not present","path":"/server/status/detailed"}
 
     @Test
-    public void withParamShouldReturnTailored_Name_Basic_Mem_Op() throws Exception {
+    public void withParam_Name_And_Memory() throws Exception {
         this.mockMvc.perform(get("/server/status/detailed?details=memory&name=yaakov"))
                 .andDo(print()).andExpect(status().isOk())
                 .andExpect(jsonPath("$.contentHeader").value("Server Status requested by yaakov"))
                 .andExpect(jsonPath("$.statusDesc").value("Server is up, and its memory is running low"));
+
+    }
+
+    @Test
+    public void withParam_Name_And_Operations() throws Exception {
+        this.mockMvc.perform(get("/server/status/detailed?details=operations&name=Jacob"))
+                .andDo(print()).andExpect(status().isOk())
+                .andExpect(jsonPath("$.contentHeader").value("Server Status requested by Jacob"))
+                .andExpect(jsonPath("$.statusDesc").value("Server is up, and is operating normally"));
+
+    }
+
+    @Test
+    public void withParam_Name_And_Extensions() throws Exception {
+        this.mockMvc.perform(get("/server/status/detailed?details=extensions&name=Jacob"))
+                .andDo(print()).andExpect(status().isOk())
+                .andExpect(jsonPath("$.contentHeader").value("Server Status requested by Jacob"))
+                .andExpect(jsonPath("$.statusDesc").value("Server is up, and is using these extensions - [Hypervisor, Kubernetes, RAID-6]"));
 
     }
 }

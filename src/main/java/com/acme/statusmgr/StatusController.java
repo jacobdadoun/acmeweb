@@ -89,7 +89,7 @@ public class StatusController {
         }
         else{
             //TODO --> Define exceptionss. with or without HTTPStatus.Bad_Request?
-            Throw new DetailsException();
+            //Throw new DetailsException();
         }
 
 

@@ -9,6 +9,7 @@ public class ServerManager {
     static public String getOperationStatusDesc() {
         return ", and is operating normally";
     }
+
     static public String getExtensionsStatusDesc(){
         return ", and is using these extensions - [Hypervisor, Kubernetes, RAID-6]";
     }

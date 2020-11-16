@@ -21,7 +21,7 @@ public class OperationStatus extends ServerStatusDecorator {
 
     @Override
     public String getStatusDesc(){
-        return super.getStatusDesc() + ServerManager.getMemoryStatusDesc();
+        return super.getStatusDesc() + ServerManager.getOperationStatusDesc();
     }
 
 }
