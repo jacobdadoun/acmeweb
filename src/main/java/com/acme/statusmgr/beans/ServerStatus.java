@@ -1,13 +1,15 @@
 package com.acme.statusmgr.beans;
 
-import com.acme.servermgr.ServerManager;
+import java.util.List;
 
 /**
  * A POJO that represents Server Status and can be used to generate JSON for that status
  */
-public class ServerStatus {
+// Todo --> All decorators for a parent class must follow the same pattern.
+//  The Assignment is to concatenate new messages in the decorator subclasses by concatenating add-on strings.
+public class ServerStatus implements StatusInterface{
 
-    private  long id;
+    private long id;
     private String contentHeader;
     private String statusDesc = "Unknown";
 
@@ -19,31 +21,33 @@ public class ServerStatus {
      * @param id                a numeric identifier/counter of which request this
      * @param contentHeader     info about the request
      */
+
     public ServerStatus(long id, String contentHeader) {
         this.id = id;
         this.contentHeader = contentHeader;
 
         // Obtain current status of server
-        this.statusDesc = "Server is " + ServerManager.getCurrentServerStatus();
+        this.statusDesc = "Server is up";
     }
 
-    public ServerStatus() {
-
+    @Override
+    public void setStatusDesc(String statusDesc) {
+        this.statusDesc = statusDesc;
     }
 
+    @Override
     public long getId() {
         return id;
     }
 
+    @Override
     public String getContentHeader() {
-
         return contentHeader;
     }
 
-
+    @Override
     public String getStatusDesc() {
         return statusDesc;
     }
-
 
 }

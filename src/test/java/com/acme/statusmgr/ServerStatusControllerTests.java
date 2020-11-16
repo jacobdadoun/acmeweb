@@ -51,4 +51,12 @@ public class ServerStatusControllerTests {
                 .andExpect(jsonPath("$.contentHeader").value("Server Status requested by RebYid"));
     }
 
+    // curl http://localhost:8080/server/status/detailed
+    //{"timestamp":"2019-11-06T07:20:47.663+0000","status":400,"error":"Bad Request","message":"Required List parameter 'details' is not present","path":"/server/status/detailed"}
+//    @Test
+//    public void paramDetailShouldReturnTailoredMessage() throws Exception {
+//
+//        this.mockMvc.perform(get("/server/status/detailed").param("details", "red,green,blue"))
+//                .andDo(print()).andExpect(status().i .andExpect(jsonPath("$.contentHeader").value("Server Status requested by RebYid"));
+//    }
 }

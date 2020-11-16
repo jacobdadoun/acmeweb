@@ -3,7 +3,7 @@ package com.acme.statusmgr;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
-import com.acme.statusmgr.beans.ServerStatus;
+import com.acme.statusmgr.beans.*;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -50,5 +50,35 @@ public class StatusController {
 
         return new ServerStatus(counter.incrementAndGet(),
                             String.format(template, name));
+    }
+
+    // http://localhost:8080/server/status/detailed?details=operations,extensions,memory
+    // {"id":3,"contentHeader":"Server Status requested by Anonymous","statusDesc":"Server is up, and is operating normally, and is using these extensions - [Hypervisor, Kubernetes, RAID-6], and its memory is running low"}
+
+    // http://localhost:8080/server/status/detailed?details=operations,extensions,memory&name=Noach
+
+
+
+
+    // Todo --> Parse through the list of desired details.
+    //  Then have a switch statement which will create its decorator. When we call the constructor,
+    @RequestMapping("status/detailed")
+    public StatusInterface getDetailedInfo(@RequestParam(value="name", defaultValue="Anonymous", required = false) String name, @RequestParam(value="details") List<String> details){
+
+        StatusInterface statusBuilder = new ServerStatus(counter.incrementAndGet(), String.format(template, name));
+
+        for (String str : details) {
+            if(str.toLowerCase().equals("operations")){
+                statusBuilder = new OperationStatus(statusBuilder);
+            }
+            if(str.toLowerCase().equals("extensions")){
+                statusBuilder = new ExtensionStatus(statusBuilder);
+            }
+            if(str.toLowerCase().equals("memory")){
+                statusBuilder = new MemoryStatus(statusBuilder);
+            }
+        }
+
+        return statusBuilder;
     }
 }
