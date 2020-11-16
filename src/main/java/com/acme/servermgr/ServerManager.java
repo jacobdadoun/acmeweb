@@ -1,5 +1,10 @@
 package com.acme.servermgr;
 
+/**
+ * ServerManager provides the decorators with the string status message desired.
+ * When a decorator calls a method of this class, that method returns a string for that decorator's status.
+ */
+
 public class ServerManager {
 
     static public String getServerStatusDesc(){
